@@ -25,6 +25,66 @@ class _ProfilePageState extends State<ProfilePage>
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Container(
+              height: mediaSize.height / 5,
+              width: mediaSize.width,
+              decoration: const BoxDecoration(
+                color: Colors.orange,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Stack(
+                  children: [
+                    const Positioned(
+                      left: 0,
+                      bottom: 0,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        radius: 40,
+                        backgroundImage:
+                            AssetImage("lib/data/images/logo/teacher.png"),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Positioned(
+                      bottom: 10,
+                      left: 90,
+                      child: Column(
+                        children: [
+                          const Text(
+                            "Luu Van Hien",
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            height: 20,
+                            width: 130,
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            child: const Center(
+                              child: Text(
+                                "Thành viên",
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Container(
