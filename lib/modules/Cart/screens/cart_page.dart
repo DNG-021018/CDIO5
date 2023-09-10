@@ -76,8 +76,16 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
       ),
       bottomNavigationBar: Container(
         height: MediaQuery.of(context).size.width / 2.8,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: const Offset(0, 3),
+            ),
+          ],
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -104,6 +112,8 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                 ],
               ),
               const Spacer(),
+              // TODO: btn_Thanh Toán
+
               ElevatedButton(
                 style: ButtonStyle(
                   fixedSize: MaterialStatePropertyAll(
@@ -116,7 +126,6 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                 onPressed: () {
                   // Xử lý logic khi nhấn nút thanh toán
                 },
-                // TODO: btn_Thanh Toán
                 child: const Text(
                   'THANH TOÁN',
                   style: TextStyle(

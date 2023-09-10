@@ -8,6 +8,7 @@ import '../../Cart/screens/cart_page.dart';
 import '../../Notifications/screens/notification_page.dart';
 import '../../Profile/screens/profile_page.dart';
 import '../models/product.dart';
+import 'detail_product.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -375,11 +376,21 @@ class _HomeState extends State<Home> {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
               Product product = products[index];
-              return CardItem(
-                imagesName: product.imageName,
-                productName: product.productName,
-                productPrice: product.productPrice.toString(),
-                mediaSize: widget.mediaSize,
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProductDetailPage(product: product),
+                    ),
+                  );
+                },
+                child: CardItem(
+                  imagesName: product.imageName,
+                  productName: product.productName,
+                  productPrice: product.productPrice.toString(),
+                  mediaSize: widget.mediaSize,
+                ),
               );
             },
           ),
