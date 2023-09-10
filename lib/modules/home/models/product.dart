@@ -8,4 +8,12 @@ class Product {
     required this.productName,
     required this.productPrice,
   });
+
+  static double totalPrice(List<Product> products) {
+    double total = 0;
+    for (var product in products) {
+      total += product.productPrice;
+    }
+    return total;
+  }
 }

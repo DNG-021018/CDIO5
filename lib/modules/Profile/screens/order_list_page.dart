@@ -12,8 +12,12 @@ class OrderListPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Đơn hàng'),
+          backgroundColor: Colors.orange,
           bottom: const TabBar(
             labelPadding: EdgeInsets.symmetric(horizontal: 8),
+            labelStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
             tabs: [
               Tab(
                 text: 'Chờ xác nhận',

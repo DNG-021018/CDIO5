@@ -1,8 +1,5 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:badges/badges.dart' as badges;
 import 'package:shoes_shop_app/modules/home/widgets/brand.dart';
 import 'package:shoes_shop_app/modules/home/widgets/gridview_item.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -55,26 +52,20 @@ class _HomeScreenState extends State<HomeScreen> {
           selectedItemColor: Colors.orange,
           unselectedItemColor: Colors.black,
           showUnselectedLabels: true,
-          items: [
-            const BottomNavigationBarItem(
+          items: const [
+            BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: badges.Badge(
-                showBadge: true,
-                ignorePointer: false,
-                badgeContent: const Text("3"),
-                onTap: () {},
-                child: const Icon(FontAwesomeIcons.cartShopping),
-              ),
+              icon: Icon(FontAwesomeIcons.cartShopping),
               label: 'Giỏ hàng',
             ),
-            const BottomNavigationBarItem(
+            BottomNavigationBarItem(
               icon: Icon(Icons.notifications),
               label: 'Thông báo',
             ),
-            const BottomNavigationBarItem(
+            BottomNavigationBarItem(
               icon: Icon(Icons.person),
               label: 'Tôi',
             ),
@@ -85,13 +76,21 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class Home extends StatelessWidget {
-  Home({
+class Home extends StatefulWidget {
+  const Home({
     super.key,
     required this.mediaSize,
     required this.pageController,
   });
 
+  final Size mediaSize;
+  final PageController pageController;
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   List<Product> products = [
     Product(
       imageName: 'converse',
@@ -194,8 +193,6 @@ class Home extends StatelessWidget {
       productPrice: 24.99,
     ),
   ];
-  final Size mediaSize;
-  final PageController pageController;
 
   @override
   Widget build(BuildContext context) {
@@ -205,48 +202,31 @@ class Home extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 18),
             // search + cart
-            child: Row(
-              children: [
-                const SizedBox(
-                  width: 10,
-                ),
-                // TODO: search bar
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: Center(
-                    child: Container(
-                      color: Colors.white,
-                      width: mediaSize.width / 1.3,
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Looking for shoes',
-                          hintStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12,
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.never,
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: Colors.black,
-                          ),
-                          // contentPadding: EdgeInsets.all(10),
-                          isCollapsed: false,
-                        ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: Center(
+                child: Container(
+                  color: Colors.white,
+                  width: widget.mediaSize.width,
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Looking for shoes',
+                      hintStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
                       ),
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.black,
+                      ),
+                      // contentPadding: EdgeInsets.all(10),
+                      isCollapsed: false,
                     ),
                   ),
                 ),
-                const Spacer(),
-                // TODO: cart
-                badges.Badge(
-                  showBadge: true,
-                  ignorePointer: false,
-                  badgeContent: const Text("3"),
-                  onTap: () {},
-                  child: const Icon(FontAwesomeIcons.cartShopping),
-                ),
-              ],
+              ),
             ),
           ),
           // TODO: SALES
@@ -254,27 +234,27 @@ class Home extends StatelessWidget {
             alignment: const AlignmentDirectional(0, 0),
             children: [
               SizedBox(
-                height: mediaSize.height / 3.9,
-                width: mediaSize.width,
+                height: widget.mediaSize.height / 3.9,
+                width: widget.mediaSize.width,
                 child: PageView(
-                  controller: pageController,
+                  controller: widget.pageController,
                   children: [
                     SizedBox(
-                      height: mediaSize.height / 3.9,
+                      height: widget.mediaSize.height / 3.9,
                       child: Image.asset(
                         "lib/data/images/sales images/1.jpg",
                         fit: BoxFit.cover,
                       ),
                     ),
                     SizedBox(
-                      height: mediaSize.height / 3.9,
+                      height: widget.mediaSize.height / 3.9,
                       child: Image.asset(
                         "lib/data/images/sales images/2.jpg",
                         fit: BoxFit.cover,
                       ),
                     ),
                     SizedBox(
-                      height: mediaSize.height / 3.9,
+                      height: widget.mediaSize.height / 3.9,
                       child: Image.asset(
                         "lib/data/images/sales images/3.jpg",
                         fit: BoxFit.cover,
@@ -292,7 +272,7 @@ class Home extends StatelessWidget {
                     dotWidth: 12,
                     activeDotColor: Colors.orange,
                   ),
-                  controller: pageController,
+                  controller: widget.pageController,
                   count: 3,
                 ),
               ),
@@ -303,8 +283,8 @@ class Home extends StatelessWidget {
           ),
           // TODO: BRAND
           Container(
-            height: mediaSize.height / 20,
-            width: mediaSize.width,
+            height: widget.mediaSize.height / 20,
+            width: widget.mediaSize.width,
             decoration: const BoxDecoration(
               color: Colors.white,
             ),
@@ -360,8 +340,8 @@ class Home extends StatelessWidget {
           ),
           // TODO: GỢI Ý CHO BẠN
           Container(
-            height: mediaSize.height / 20,
-            width: mediaSize.width,
+            height: widget.mediaSize.height / 20,
+            width: widget.mediaSize.width,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(
                 Radius.circular(12),
@@ -399,7 +379,7 @@ class Home extends StatelessWidget {
                 imagesName: product.imageName,
                 productName: product.productName,
                 productPrice: product.productPrice.toString(),
-                mediaSize: mediaSize,
+                mediaSize: widget.mediaSize,
               );
             },
           ),

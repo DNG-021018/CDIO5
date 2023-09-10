@@ -54,7 +54,7 @@ class _ProfilePageState extends State<ProfilePage>
                       child: Column(
                         children: [
                           const Text(
-                            "Luu Van Hien",
+                            "Nướm Thộng Bi",
                             style: TextStyle(
                               fontSize: 18,
                             ),
