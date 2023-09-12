@@ -12,19 +12,106 @@ class ShoppingCartPage extends StatefulWidget {
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
   List<Product> products = [
     Product(
+      imageChild: [
+        'converse',
+        'Nikey1'
+            'adidas'
+            'adidas1'
+      ],
       imageName: 'converse',
       productName: 'Converse in 1975',
       productPrice: 19.99,
+      productSize: [
+        '4',
+        '4.5',
+        '5',
+        '5.5',
+        '6',
+        '6.5',
+        '7',
+        '7.5',
+        '8',
+        '8.5',
+        '9',
+        '9.5',
+        '10',
+        '10.5',
+        '11',
+        '11.5',
+        '12',
+        '12.5',
+        '13',
+        '13.5',
+        '14'
+      ],
     ),
     Product(
       imageName: 'Nikey1',
+      imageChild: [
+        'converse',
+        'Nikey1'
+            'adidas'
+            'adidas1'
+      ],
       productName: 'Nikey mix color',
       productPrice: 29.99,
+      productSize: [
+        '4',
+        '4.5',
+        '5',
+        '5.5',
+        '6',
+        '6.5',
+        '7',
+        '7.5',
+        '8',
+        '8.5',
+        '9',
+        '9.5',
+        '10',
+        '10.5',
+        '11',
+        '11.5',
+        '12',
+        '12.5',
+        '13',
+        '13.5',
+        '14'
+      ],
     ),
     Product(
+      imageChild: [
+        'converse',
+        'Nikey1'
+            'adidas'
+            'adidas1'
+      ],
       imageName: 'adidas',
       productName: 'Adidas white',
       productPrice: 14.99,
+      productSize: [
+        '4',
+        '4.5',
+        '5',
+        '5.5',
+        '6',
+        '6.5',
+        '7',
+        '7.5',
+        '8',
+        '8.5',
+        '9',
+        '9.5',
+        '10',
+        '10.5',
+        '11',
+        '11.5',
+        '12',
+        '12.5',
+        '13',
+        '13.5',
+        '14'
+      ],
     ),
   ];
 

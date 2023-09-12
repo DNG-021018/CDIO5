@@ -1,16 +1,25 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import '../models/product.dart';
 
-class ProductDetailPage extends StatelessWidget {
+class ProductDetailPage extends StatefulWidget {
   final Product product;
+  final List<String> imageUrls;
 
-  const ProductDetailPage({super.key, required this.product});
+  const ProductDetailPage(
+      {super.key, required this.product, required this.imageUrls});
+
+  @override
+  State<ProductDetailPage> createState() => _ProductDetailPageState();
+}
+
+class _ProductDetailPageState extends State<ProductDetailPage> {
+  String selectedSize = '4';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
         backgroundColor: Colors.orange,
         title: const Text('Product Detail'),
@@ -19,27 +28,86 @@ class ProductDetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // TODO: Slide ảnh
             Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  height: MediaQuery.of(context).size.height / 2.5,
+                  enlargeCenterPage: true,
+                  enableInfiniteScroll: false,
+                ),
+                items: widget.imageUrls.map((imageUrl) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                        child: Image.asset(
+                          imageUrl,
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
+            ),
+            const SizedBox(height: 25.0),
+            // TODO: Size giày
+            Container(
+              width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
-              child: Column(
-                children: [
-                  // TODO: Hình ảnh sản phẩm
-                  Image.asset(
-                    "lib/data/images/shoes images/${product.imageName}.png",
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height / 3,
-                    fit: BoxFit.cover,
-                  ),
-                  const Divider(
-                    color: Colors.grey,
-                    height: 1,
-                  ),
-                  const SizedBox(
-                    height: 100,
-                  )
-                ],
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Select Size:',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Wrap(
+                      spacing: 8.0,
+                      children: List.generate(
+                        widget.product.productSize.length,
+                        (index) => ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              selectedSize = widget.product.productSize[index];
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            splashFactory: NoSplash.splashFactory,
+                            backgroundColor: selectedSize ==
+                                    widget.product.productSize[index]
+                                ? Colors.orange
+                                : Colors.white,
+                          ),
+                          child: Text(
+                            widget.product.productSize[index],
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: selectedSize ==
+                                      widget.product.productSize[index]
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16.0),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 25.0),
@@ -99,19 +167,31 @@ class ProductDetailPage extends StatelessWidget {
           child: Column(
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // TODO: Tên sản phẩm
-                  Text(
-                    product.productName,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.product.productName,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        'Size: $selectedSize',
+                        style: const TextStyle(
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ],
                   ),
                   const Spacer(),
                   // TODO: Giá sản phẩm
                   Text(
-                    'Giá: \$${product.productPrice.toStringAsFixed(2)}',
+                    'Giá: \$${widget.product.productPrice.toStringAsFixed(2)}',
                     style: const TextStyle(
                       color: Colors.red,
                       fontSize: 24,
