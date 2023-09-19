@@ -56,6 +56,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 }).toList(),
               ),
             ),
+
             const SizedBox(height: 25.0),
             // TODO: Size giày
             Container(

@@ -12,8 +12,9 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   late Size mediaSize;
   bool obscureText = true;
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
+  String dropdownValue = 'Nam';
+  List<String> genders = ['Nam', 'Nữ'];
+  TextEditingController fullNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordConfirmController = TextEditingController();
@@ -85,6 +86,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ]),
             // Introduction
+            //TODO: Icon app
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -103,13 +105,14 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
             // Input Email address
             const SizedBox(height: 20),
+            // TODO: Họ và tên
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  width: mediaSize.width / 3,
+                  width: mediaSize.width / 1.7,
                   child: TextField(
-                    controller: lastNameController,
+                    controller: fullNameController,
                     cursorColor: brandColorSecondary,
                     decoration: InputDecoration(
                       focusedBorder: const OutlineInputBorder(
@@ -119,8 +122,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         borderSide: BorderSide(
                             color: isLastNameEmpty ? Colors.red : Colors.black),
                       ),
-                      hintText:
-                          isLastNameEmpty ? "Không được bỏ trống" : "Họ",
+                      hintText: isLastNameEmpty
+                          ? "Không được bỏ trống"
+                          : "Họ và tên",
                       hintStyle: TextStyle(
                         fontSize: 12,
                         color: isLastNameEmpty ? Colors.red : Colors.black,
@@ -131,41 +135,46 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     onChanged: (text) {
                       setState(() {
-                        isLastNameEmpty = lastNameController.text.isEmpty;
+                        isLastNameEmpty = fullNameController.text.isEmpty;
                       });
                     },
                   ),
                 ),
-                const SizedBox(width: 10),
-                SizedBox(
-                  width: mediaSize.width / 2,
-                  child: TextField(
-                    controller: firstNameController,
-                    cursorColor: brandColorSecondary,
-                    decoration: InputDecoration(
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color:
-                                isFirstNameEmpty ? Colors.red : Colors.black),
-                      ),
-                      hintText:
-                          isFirstNameEmpty ? "Không được bỏ trống" : "Tên",
-                      hintStyle: TextStyle(
-                        fontSize: 12,
-                        color: isFirstNameEmpty ? Colors.red : Colors.black,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                // TODO: Giới tính
+                Container(
+                  width: mediaSize.width / 4,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(5),
                     ),
-                    onChanged: (text) {
-                      setState(() {
-                        isFirstNameEmpty = firstNameController.text.isEmpty;
-                      });
-                    },
+                    border: Border.all(width: 1),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: DropdownButton<String>(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      value: dropdownValue,
+                      underline: const DecoratedBox(
+                        decoration: BoxDecoration(color: Colors.transparent),
+                      ),
+                      isExpanded: true,
+                      icon: const Icon(Icons.arrow_drop_down),
+                      iconSize: 24,
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                      onChanged: (newValue) {
+                        setState(() {
+                          dropdownValue = newValue.toString();
+                        });
+                      },
+                      items: genders.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
                   ),
                 ),
               ],
@@ -173,6 +182,7 @@ class _SignupScreenState extends State<SignupScreen> {
             const SizedBox(
               height: 10,
             ),
+            // TODO: địa chỉ email
             TextField(
               controller: emailController,
               cursorColor: brandColorSecondary,
@@ -201,7 +211,7 @@ class _SignupScreenState extends State<SignupScreen> {
               },
             ),
             const SizedBox(height: 10),
-            // Input Password
+            // TODO: Input Password
             TextField(
               controller: passwordController,
               cursorColor: brandColorSecondary,
@@ -245,6 +255,8 @@ class _SignupScreenState extends State<SignupScreen> {
             const SizedBox(
               height: 10,
             ),
+            // TODO: Confirm Password
+
             TextField(
               controller: passwordConfirmController,
               cursorColor: brandColorSecondary,
@@ -280,6 +292,7 @@ class _SignupScreenState extends State<SignupScreen> {
             const SizedBox(
               height: 10,
             ),
+            // TODO: Input Phonenumber
             TextField(
               controller: phoneNumberController,
               cursorColor: brandColorSecondary,
@@ -309,6 +322,7 @@ class _SignupScreenState extends State<SignupScreen> {
               },
             ),
             const SizedBox(height: 20),
+            // TODO: BTN_Signup
             GestureDetector(
               onTap: () {
                 _checkFormValidationIsEmpty();
@@ -344,13 +358,12 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void _checkFormValidationIsEmpty() {
-    if (lastNameController.text.isEmpty ||
-        firstNameController.text.isEmpty ||
+    if (fullNameController.text.isEmpty ||
         emailController.text.isEmpty ||
         passwordController.text.isEmpty ||
         passwordConfirmController.text.isEmpty ||
         phoneNumberController.text.isEmpty) {
-      // Hiển thị hộp thoại thông báo lỗi
+      // TODO: Hiển thị hộp thoại thông báo lỗi
       showDialog(
         context: context,
         builder: (context) {
@@ -372,7 +385,7 @@ class _SignupScreenState extends State<SignupScreen> {
         },
       );
     } else {
-      // Hiển thị hộp thoại thông báo đăng ký thành công
+      // TODO: Hiển thị hộp thoại thông báo đăng ký thành công
       showDialog(
         context: context,
         builder: (context) {
