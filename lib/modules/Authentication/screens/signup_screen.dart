@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shoes_shop_app/constants/palette.dart';
+import 'package:shoes_shop_app/core/constants/palette.dart';
+
+import '../utils/validator_util.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -358,32 +360,60 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void _checkFormValidationIsEmpty() {
-    if (fullNameController.text.isEmpty ||
-        emailController.text.isEmpty ||
-        passwordController.text.isEmpty ||
-        passwordConfirmController.text.isEmpty ||
-        phoneNumberController.text.isEmpty) {
+    if (
+        // ValidatorUtil.validate(.....Controller.text) == true &&
+        ValidatorUtil.validate(fullNameController.text) == true ||
+            ValidatorUtil.validate(emailController.text) == true ||
+            ValidatorUtil.validate(passwordController.text) == true ||
+            ValidatorUtil.validate(passwordConfirmController.text) == true ||
+            // ValidatorUtil.validate(.....Controller.text) == true &&
+            ValidatorUtil.validate(phoneNumberController.text) == true) {
       // TODO: Hiển thị hộp thoại thông báo lỗi
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text(
-              "Lỗi",
-              style: TextStyle(color: Colors.red),
-            ),
-            content: const Text("Vui lòng điền đầy đủ thông tin."),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("OK"),
+      if (ValidatorUtil.validateConfirmPassword(
+              passwordConfirmController.text, passwordController.text) ==
+          true) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text(
+                "Lỗi",
+                style: TextStyle(color: Colors.red),
               ),
-            ],
-          );
-        },
-      );
+              content: const Text("Mật khẩu xác thực không đúng."),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("OK"),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text(
+                "Lỗi",
+                style: TextStyle(color: Colors.red),
+              ),
+              content: const Text("Vui lòng điền đầy đủ thông tin."),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("OK"),
+                ),
+              ],
+            );
+          },
+        );
+      }
     } else {
       // TODO: Hiển thị hộp thoại thông báo đăng ký thành công
       showDialog(
@@ -395,9 +425,7 @@ class _SignupScreenState extends State<SignupScreen> {
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                  Navigator.of(context).pushNamed("/login");
+                  Navigator.popAndPushNamed(context, "/login");
                 },
                 child: const Text("OK"),
               ),

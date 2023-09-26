@@ -200,7 +200,6 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
               ),
               const Spacer(),
               // TODO: btn_Thanh Toán
-
               ElevatedButton(
                 style: ButtonStyle(
                   fixedSize: MaterialStatePropertyAll(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shoes_shop_app/constants/palette.dart';
+import 'package:shoes_shop_app/core/constants/palette.dart';
+import 'package:shoes_shop_app/modules/Authentication/utils/validator_util.dart';
 
 import '../widgets/login_third_place.dart';
 
@@ -269,7 +270,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // check Empty of email & password
   void _checkFormValidationIsEmpty() {
-    if (passwordController.text.isNotEmpty && emailController.text.isNotEmpty) {
+    if (ValidatorUtil.validate(passwordController.text) == false &&
+        ValidatorUtil.validate(emailController.text) == false) {
       Navigator.of(context).pushNamed("/home");
     } else {
       showDialog(

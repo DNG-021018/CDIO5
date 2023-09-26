@@ -42,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage>
                         backgroundColor: Colors.transparent,
                         radius: 40,
                         backgroundImage:
-                            AssetImage("lib/data/images/logo/teacher.png"),
+                            AssetImage("lib/data/images/logo/AnhLeo.png"),
                       ),
                     ),
                     const SizedBox(
@@ -54,7 +54,7 @@ class _ProfilePageState extends State<ProfilePage>
                       child: Column(
                         children: [
                           const Text(
-                            "Nướm Thộng Bi",
+                            "Nguyễn Thanh Ánh",
                             style: TextStyle(
                               fontSize: 18,
                             ),
