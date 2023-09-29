@@ -1,8 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shoes_shop_app/core/constants/palette.dart';
+import 'package:shoes_shop_app/modules/Authentication/services/api_service.dart';
 import 'package:shoes_shop_app/modules/Authentication/utils/validator_util.dart';
 
+import '../models/user.dart';
 import '../widgets/login_third_place.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -261,7 +267,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // renember me method
+  // renember me
   void _toggleRememberMe() {
     setState(() {
       rememberMe = !rememberMe;
@@ -269,20 +275,54 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   // check Empty of email & password
-  void _checkFormValidationIsEmpty() {
+  void _checkFormValidationIsEmpty() async {
     if (ValidatorUtil.validate(passwordController.text) == false &&
         ValidatorUtil.validate(emailController.text) == false) {
-      Navigator.of(context).pushNamed("/home");
+      try {
+        User userToSignIn = User(
+          accName: emailController.text,
+          password: passwordController.text,
+        );
+        final response = await AuthService().signIn(userToSignIn);
+        final responseData = json.decode(response);
+        if (responseData['status'] == true) {
+          Navigator.of(context).pushNamed("/home");
+        } else {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text(
+                  "Không tìm thấy tài khoản đăng nhập",
+                  style: TextStyle(fontSize: 17),
+                ),
+                content: const Text("Vui lòng kiểm tra lại thông tin."),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("OK"),
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      } catch (error) {
+        // Xử lý lỗi ở đây nếu cần
+        debugPrint(error.toString());
+      }
     } else {
       showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             title: const Text(
-              "Không tìm thấy tài khoản đăng nhập",
+              "Không tìm thấy tài khoản đăng nhập",
               style: TextStyle(fontSize: 17),
             ),
-            content: const Text("Vui lòng kiểm tra lại thông tin."),
+            content: const Text("Vui lòng kiểm tra lại thông tin."),
             actions: [
               TextButton(
                 onPressed: () {

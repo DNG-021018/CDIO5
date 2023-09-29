@@ -1,7 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shoes_shop_app/core/constants/palette.dart';
 
+import '../models/user.dart';
+import '../services/api_service.dart';
 import '../utils/validator_util.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -126,7 +132,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       hintText: isLastNameEmpty
                           ? "Không được bỏ trống"
-                          : "Họ và tên",
+                          : "Tài khoản",
                       hintStyle: TextStyle(
                         fontSize: 12,
                         color: isLastNameEmpty ? Colors.red : Colors.black,
@@ -360,15 +366,11 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void _checkFormValidationIsEmpty() {
-    if (
-        // ValidatorUtil.validate(.....Controller.text) == true &&
-        ValidatorUtil.validate(fullNameController.text) == true ||
-            ValidatorUtil.validate(emailController.text) == true ||
-            ValidatorUtil.validate(passwordController.text) == true ||
-            ValidatorUtil.validate(passwordConfirmController.text) == true ||
-            // ValidatorUtil.validate(.....Controller.text) == true &&
-            ValidatorUtil.validate(phoneNumberController.text) == true) {
-      // TODO: Hiển thị hộp thoại thông báo lỗi
+    if (ValidatorUtil.validate(fullNameController.text) == true ||
+        ValidatorUtil.validate(emailController.text) == true ||
+        ValidatorUtil.validate(passwordController.text) == true ||
+        ValidatorUtil.validate(passwordConfirmController.text) == true ||
+        ValidatorUtil.validate(phoneNumberController.text) == true) {
       if (ValidatorUtil.validateConfirmPassword(
               passwordConfirmController.text, passwordController.text) ==
           true) {
@@ -415,7 +417,6 @@ class _SignupScreenState extends State<SignupScreen> {
         );
       }
     } else {
-      // TODO: Hiển thị hộp thoại thông báo đăng ký thành công
       showDialog(
         context: context,
         builder: (context) {
@@ -424,8 +425,19 @@ class _SignupScreenState extends State<SignupScreen> {
             content: const Text("Đăng ký thành công."),
             actions: [
               TextButton(
-                onPressed: () {
-                  Navigator.popAndPushNamed(context, "/login");
+                onPressed: () async {
+                  User userToAccounts = User(
+                      accName: fullNameController.text,
+                      email: emailController.text,
+                      password: passwordController.text,
+                      passwordCF: passwordConfirmController.text,
+                      phoneNumber: phoneNumberController.text,
+                      gender: dropdownValue);
+                  final response = await AuthService().accounts(userToAccounts);
+                  final responseData = json.decode(response);
+                  if (responseData['status'] == true) {
+                    Navigator.popAndPushNamed(context, "/login");
+                  }
                 },
                 child: const Text("OK"),
               ),
