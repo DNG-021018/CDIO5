@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../../Cart/widgets/cart_card.dart';
 import '../../home/models/product.dart';
 
 class ShoppingCartPage extends StatefulWidget {
@@ -129,36 +129,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
         itemCount: products.length, // Số lượng sản phẩm trong giỏ hàng
         itemBuilder: (context, index) {
           Product product = products[index];
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(12),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  backgroundImage: AssetImage(
-                      "lib/data/images/shoes images/${product.imageName}.png"),
-                  radius: 30,
-                ),
-                title: Text(product.productName),
-                subtitle: const Text("Size 36"),
-                trailing: Text(product.productPrice.toString()),
-              ),
-            ),
-          );
+          return CartCard(product: product);
         },
       ),
       bottomNavigationBar: Container(
@@ -210,7 +181,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                       const MaterialStatePropertyAll(Colors.orange),
                 ),
                 onPressed: () {
-                  // Xử lý logic khi nhấn nút thanh toán
+                  Navigator.of(context).pushNamed("/checkout");
                 },
                 child: const Text(
                   'THANH TOÁN',

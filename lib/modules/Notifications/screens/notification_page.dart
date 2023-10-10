@@ -1,44 +1,68 @@
 import 'package:flutter/material.dart';
 
-class NotificationsPage extends StatelessWidget {
+import '../model/item.dart';
+
+class NotificationsPage extends StatefulWidget {
   const NotificationsPage({super.key});
+
+  @override
+  State<NotificationsPage> createState() => _NotificationsPageState();
+}
+
+class _NotificationsPageState extends State<NotificationsPage> {
+  List<Item> items = [
+    Item(
+      headerValue: 'Header 1',
+      expandedValue: 'Expanded 1',
+      isExpanded: false,
+    ),
+    Item(
+      headerValue: 'Header 2',
+      expandedValue: 'Expanded 2',
+      isExpanded: false,
+    ),
+    Item(
+      headerValue: 'Header 3',
+      expandedValue: 'Expanded 3',
+      isExpanded: false,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         backgroundColor: Colors.orange,
         title: const Text('Thông báo'),
         automaticallyImplyLeading: false,
       ),
       body: ListView.builder(
-        itemCount: 3, // Số lượng thông báo
-        itemBuilder: (context, index) {
-          return Card(
-            margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-            child: ListTile(
-              leading: const Icon(Icons.notifications),
-              title: Text('Thông báo số $index'),
-              subtitle: Text('Nội dung thông báo $index'),
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text('Chi tiết thông báo'),
-                      content: Text('Đây là nội dung của thông báo số $index.'),
-                      actions: <Widget>[
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text('Đóng'),
-                        ),
-                      ],
+        itemCount: items.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 3),
+            child: ExpansionPanelList(
+              elevation: 1,
+              expandedHeaderPadding: EdgeInsets.zero,
+              expansionCallback: (int itemIndex, bool isExpanded) {
+                setState(() {
+                  items[itemIndex].isExpanded = !isExpanded;
+                });
+              },
+              children: [
+                ExpansionPanel(
+                  headerBuilder: (BuildContext context, bool isExpanded) {
+                    return ListTile(
+                      title: Text(items[index].headerValue.toString()),
                     );
                   },
-                );
-              },
+                  body: ListTile(
+                    title: Text(items[index].expandedValue.toString()),
+                  ),
+                  isExpanded: items[index].isExpanded,
+                ),
+              ],
             ),
           );
         },

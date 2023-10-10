@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _loginForm() {
     return Container(
       width: mediaSize.width,
-      height: mediaSize.height / 1.7,
+      height: mediaSize.height / 1.6,
       decoration: const BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -166,6 +166,27 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
                 const Text('Remember Me'),
+                const Spacer(),
+                RichText(
+                  text: TextSpan(
+                    text: "",
+                    style: const TextStyle(
+                        fontSize: 16, color: brandColorSecondary),
+                    children: [
+                      WidgetSpan(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushNamed("/password");
+                          },
+                          child: const Text(
+                            "Quên mật khẩu?",
+                            style: TextStyle(fontSize: 15, color: Colors.blue),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
             const SizedBox(height: 20),
@@ -203,7 +224,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 RichText(
                   text: TextSpan(
-                    text: "Chưa có tài khoản? ",
+                    text: "Chưa phải là thành viên? ",
                     style: const TextStyle(
                         fontSize: 16, color: brandColorSecondary),
                     children: [

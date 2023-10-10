@@ -19,7 +19,8 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   late Size mediaSize;
-  bool obscureText = true;
+  bool obscureTextPassword = true;
+  bool obscureTextPasswordConfirm = true;
   String dropdownValue = 'Nam';
   List<String> genders = ['Nam', 'Nữ'];
   TextEditingController fullNameController = TextEditingController();
@@ -62,7 +63,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget _signinForm() {
     return Container(
       width: mediaSize.width,
-      height: mediaSize.height / 1.5,
+      height: mediaSize.height / 1.4,
       decoration: const BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -223,7 +224,7 @@ class _SignupScreenState extends State<SignupScreen> {
             TextField(
               controller: passwordController,
               cursorColor: brandColorSecondary,
-              obscureText: obscureText,
+              obscureText: obscureTextPassword,
               keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
                 focusedBorder: const OutlineInputBorder(
@@ -245,10 +246,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 suffixIcon: IconButton(
                   onPressed: () {
                     setState(() {
-                      obscureText = !obscureText;
+                      obscureTextPassword = !obscureTextPassword;
                     });
                   },
-                  icon: obscureText
+                  icon: obscureTextPassword
                       ? const Icon(FontAwesomeIcons.eyeSlash, size: 18)
                       : const Icon(FontAwesomeIcons.eye, size: 18),
                 ),
@@ -268,7 +269,7 @@ class _SignupScreenState extends State<SignupScreen> {
             TextField(
               controller: passwordConfirmController,
               cursorColor: brandColorSecondary,
-              obscureText: obscureText,
+              obscureText: obscureTextPasswordConfirm,
               keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
                 focusedBorder: const OutlineInputBorder(
@@ -289,6 +290,17 @@ class _SignupScreenState extends State<SignupScreen> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      obscureTextPasswordConfirm = !obscureTextPasswordConfirm;
+                    });
+                  },
+                  icon: obscureTextPasswordConfirm
+                      ? const Icon(FontAwesomeIcons.eyeSlash, size: 18)
+                      : const Icon(FontAwesomeIcons.eye, size: 18),
+                ),
+                suffixIconColor: brandColorSecondary,
               ),
               onChanged: (text) {
                 setState(() {
@@ -302,6 +314,7 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
             // TODO: Input Phonenumber
             TextField(
+              keyboardType: TextInputType.number,
               controller: phoneNumberController,
               cursorColor: brandColorSecondary,
               decoration: InputDecoration(

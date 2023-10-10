@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shoes_shop_app/modules/Cart/cart_module.dart';
 import 'package:shoes_shop_app/modules/Profile/profile_module.dart';
-
 import '../modules/Authentication/authentication_module.dart';
 import '../modules/home/home_module.dart';
 
