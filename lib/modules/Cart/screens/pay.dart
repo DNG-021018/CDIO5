@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/palette.dart';
 import '../widgets/cart_card.dart';
 import '../../home/models/product.dart';
 
@@ -11,6 +12,15 @@ class CheckOutScreen extends StatefulWidget {
 }
 
 class _CheckOutScreenState extends State<CheckOutScreen> {
+  bool isAddressEmpty = false;
+  bool isNameEmpty = false;
+  bool isPhoneNumberEmpty = false;
+
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController noteController = TextEditingController();
+
   List<Product> products = [
     Product(
       imageChild: [
@@ -126,17 +136,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              decoration: const BoxDecoration(
-                color: Colors.amber,
-              ),
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("data"),
-                ],
-              ),
-            ),
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -146,14 +145,129 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 return CartCard(product: product);
               },
             ),
-            Container(
-              decoration: const BoxDecoration(
-                color: Colors.amber,
-              ),
-              child: const Column(
+            Padding(
+              padding: const EdgeInsets.all(25),
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("data"),
+                  const SizedBox(height: 10),
+                  // TODO: Input address
+                  TextField(
+                    controller: addressController,
+                    cursorColor: brandColorSecondary,
+                    decoration: InputDecoration(
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: isAddressEmpty ? Colors.red : Colors.black),
+                      ),
+                      hintText: isAddressEmpty
+                          ? "Không được bỏ trống"
+                          : "Địa chỉ nhận hàng",
+                      hintStyle: TextStyle(
+                        fontSize: 12,
+                        color: isAddressEmpty ? Colors.red : Colors.black,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    onChanged: (text) {
+                      setState(() {
+                        isAddressEmpty = addressController.text.isEmpty;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  const SizedBox(height: 10),
+                  // TODO: Input address
+                  TextField(
+                    controller: nameController,
+                    cursorColor: brandColorSecondary,
+                    decoration: InputDecoration(
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: isNameEmpty ? Colors.red : Colors.black),
+                      ),
+                      hintText: isNameEmpty
+                          ? "Không được bỏ trống"
+                          : "Họ và tên người nhận:",
+                      hintStyle: TextStyle(
+                        fontSize: 12,
+                        color: isNameEmpty ? Colors.red : Colors.black,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    onChanged: (text) {
+                      setState(() {
+                        isNameEmpty = nameController.text.isEmpty;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  const SizedBox(height: 10),
+                  // TODO: Input address
+                  TextField(
+                    controller: phoneNumberController,
+                    cursorColor: brandColorSecondary,
+                    decoration: InputDecoration(
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color:
+                                isPhoneNumberEmpty ? Colors.red : Colors.black),
+                      ),
+                      hintText: isPhoneNumberEmpty
+                          ? "Không được bỏ trống"
+                          : "Số điện thoại:",
+                      hintStyle: TextStyle(
+                        fontSize: 12,
+                        color: isPhoneNumberEmpty ? Colors.red : Colors.black,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    onChanged: (text) {
+                      setState(() {
+                        isPhoneNumberEmpty = phoneNumberController.text.isEmpty;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  const SizedBox(height: 10),
+                  // TODO: Input address
+                  TextField(
+                    maxLines: 5,
+                    controller: noteController,
+                    cursorColor: brandColorSecondary,
+                    decoration: InputDecoration(
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      hintText: "Lưu ý:",
+                      hintStyle: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.black,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),
@@ -178,8 +292,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   title: const Text('Thanh toán thành công!'),
                   actions: <Widget>[
                     ElevatedButton(
+                      style: const ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll(Colors.orange),
+                      ),
                       child: const Text('OK'),
                       onPressed: () {
+                        Navigator.of(context).pop();
                         Navigator.of(context).pop();
                       },
                     ),

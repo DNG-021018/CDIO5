@@ -27,9 +27,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
       isExpanded: false,
     ),
   ];
+  late Size mediaSize;
 
   @override
   Widget build(BuildContext context) {
+    mediaSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
@@ -37,36 +39,63 @@ class _NotificationsPageState extends State<NotificationsPage> {
         title: const Text('Thông báo'),
         automaticallyImplyLeading: false,
       ),
-      body: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 3),
-            child: ExpansionPanelList(
-              elevation: 1,
-              expandedHeaderPadding: EdgeInsets.zero,
-              expansionCallback: (int itemIndex, bool isExpanded) {
-                setState(() {
-                  items[itemIndex].isExpanded = !isExpanded;
-                });
-              },
-              children: [
-                ExpansionPanel(
-                  headerBuilder: (BuildContext context, bool isExpanded) {
-                    return ListTile(
-                      title: Text(items[index].headerValue.toString()),
-                    );
-                  },
-                  body: ListTile(
-                    title: Text(items[index].expandedValue.toString()),
-                  ),
-                  isExpanded: items[index].isExpanded,
-                ),
-              ],
+      body: Container(
+        width: mediaSize.width,
+        height: mediaSize.height,
+        decoration: BoxDecoration(
+          color: Colors.grey[300],
+        ),
+        child: Stack(
+          alignment: const Alignment(0, 0),
+          children: [
+            Positioned(
+              top: 50,
+              child: Image.asset(
+                "lib/data/images/logo/brandShop.png",
+              ),
             ),
-          );
-        },
+            const Positioned(
+              top: 450,
+              child: Text(
+                "Bạn không có thông báo nào",
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
+      // body: ListView.builder(
+      //   itemCount: items.length,
+      //   itemBuilder: (BuildContext context, int index) {
+      //     return Padding(
+      //       padding: const EdgeInsets.symmetric(vertical: 3),
+      //       child: ExpansionPanelList(
+      //         elevation: 1,
+      //         expandedHeaderPadding: EdgeInsets.zero,
+      //         expansionCallback: (int itemIndex, bool isExpanded) {
+      //           setState(() {
+      //             items[itemIndex].isExpanded = !isExpanded;
+      //           });
+      //         },
+      //         children: [
+      //           ExpansionPanel(
+      //             headerBuilder: (BuildContext context, bool isExpanded) {
+      //               return ListTile(
+      //                 title: Text(items[index].headerValue.toString()),
+      //               );
+      //             },
+      //             body: ListTile(
+      //               title: Text(items[index].expandedValue.toString()),
+      //             ),
+      //             isExpanded: items[index].isExpanded,
+      //           ),
+      //         ],
+      //       ),
+      //     );
+      //   },
+      // ),
     );
   }
 }
